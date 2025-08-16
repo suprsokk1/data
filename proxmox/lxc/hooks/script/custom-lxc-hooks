@@ -2,8 +2,12 @@
 case $(systemd-detect-virt) in
   ( none )
   if [ -n "$LXC_ROOTFS_PATH" ]; then
-    if ! [ -s "${LXC_ROOTFS_PATH}/bin/${0##*/}" ]; then
-      install -vD --compare -- "$0" ${LXC_ROOTFS_PATH}/bin/
+    pushd ${LXC_ROOTFS_PATH} || exit
+    trap 'popd' EXIT
+    if ! [ -s ./bin/"${0##*/}" ]; then
+      if install -vD --compare -- "$0" ./bin/; then
+        printf 'lxc.hook.start = /bin/%s\n' "${0##*/}" > /usr/share/lxc/config/common.conf.d/11custom.conf
+      fi
     fi
   fi
 
