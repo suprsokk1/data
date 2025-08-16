@@ -1,6 +1,6 @@
 #!/bin/bash
 case $(systemd-detect-virt) in
-  ( none* )
+  ( none )
   if [ -n "$LXC_ROOTFS_PATH" ]; then
     pushd "${LXC_ROOTFS_PATH}" || exit
     trap 'popd' EXIT
