@@ -1,2 +1,6 @@
 #!/bin/bash
-# TODO
+case ${LXC_HOOK_SECTION}-${LXC_HOOK_TYPE} in
+  ( todo )  ;;
+esac
+
+set > /var/log/${0##*/}.stdout
