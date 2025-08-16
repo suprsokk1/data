@@ -1,8 +1,9 @@
 #!/bin/bash
-# if [ -n "$LXC_ROOTFS_MOUNT" ]; then
-#   install -vDT --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/"${0##*/}"
-# fi
-touch $LXC_ROOTFS_PATH/.${0##*/}
+if [ -n "$LXC_ROOTFS_PATH" ]; then
+  if ! [ -s ${LXC_ROOTFS_MOUNT}/bin/"${0##*/}" ]; then
+    install -vD --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/
+  fi
+fi
 
 case ${LXC_HOOK_TYPE} in
   ( start )
