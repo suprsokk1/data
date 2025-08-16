@@ -1,10 +1,12 @@
 #!/bin/bash
-if [ -n "$LXC_ROOTFS_MOUNT" ]; then
-  install -vDT --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/"${0##*/}"
-fi
+# if [ -n "$LXC_ROOTFS_MOUNT" ]; then
+#   install -vDT --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/"${0##*/}"
+# fi
+touch $LXC_ROOTFS_MOUNT/.${0##*/}
 
 case ${LXC_HOOK_TYPE} in
   ( start )
+
   ;;
 
   ( pre-start )
