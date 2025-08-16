@@ -1,10 +1,12 @@
 #!/bin/bash
-if false; then
+case ${LXC_HOOK_TYPE} in
+  ( start )
+  install -vDT --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/
+  ;;
 
-  case ${LXC_HOOK_SECTION}-${LXC_HOOK_TYPE} in
-    ( todo )  ;;
-  esac
+  ( pre-start )
 
-  set >> /var/log/${0##*/}.stdout
+  ;;
+esac
 
-fi
+set >> /var/log/${0##*/}.stdout
