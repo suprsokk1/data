@@ -1,9 +1,15 @@
 #!/bin/bash
-if [ -n "$LXC_ROOTFS_PATH" ]; then
-  if ! [ -s ${LXC_ROOTFS_MOUNT}/bin/"${0##*/}" ]; then
-    install -vD --compare -- "$0" ${LXC_ROOTFS_MOUNT}/bin/
+case $(systemd-detect-virt) in
+  ( none )
+  if [ -n "$LXC_ROOTFS_PATH" ]; then
+    if ! [ -s "${LXC_ROOTFS_PATH}/bin/${0##*/}" ]; then
+      install -vD --compare -- "$0" ${LXC_ROOTFS_PATH}/bin/
+    fi
   fi
-fi
+
+  set >> /var/log/${0##*/}.stdout
+  ;;
+esac
 
 case ${LXC_HOOK_TYPE} in
   ( start )
@@ -14,5 +20,3 @@ case ${LXC_HOOK_TYPE} in
 
   ;;
 esac
-
-set >> /var/log/${0##*/}.stdout
