@@ -1,0 +1,3 @@
+http://download.proxmox.com/images/system/debian-12-standard_12.7-1_amd64.tar.zst
+http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst
+http://mirror.turnkeylinux.org/turnkeylinux/images/proxmox/debian-12-turnkey-ansible_18.0-1_amd64.tar.gz
