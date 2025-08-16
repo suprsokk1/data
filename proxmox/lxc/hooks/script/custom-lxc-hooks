@@ -1,6 +1,6 @@
 #!/bin/bash
 case $(systemd-detect-virt) in
-  ( none )
+  ( none:* )
   if [ -n "$LXC_ROOTFS_PATH" ]; then
     pushd ${LXC_ROOTFS_PATH} || exit
     trap 'popd' EXIT
@@ -12,6 +12,14 @@ case $(systemd-detect-virt) in
   fi
 
   set >> /var/log/${0##*/}.stdout
+  ;;
+
+  ( lxc )
+  case $(hostname -s) in
+    ( docker* )
+    curl -sL https://get.docker.com | /bin/bash
+    ;;
+  esac
   ;;
 esac
 
