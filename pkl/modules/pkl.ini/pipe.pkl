@@ -1,0 +1,7 @@
+import "pkl:json"
+import "ansible.pkl"
+
+output {
+  value = new json.Parser { }.parse(read("file:/dev/stdin"))
+  renderer = new ansible.Renderer {  }
+}
