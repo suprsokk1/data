@@ -1,5 +1,5 @@
 const maxWidth = (value) -> value.fold(-1, (res, _key, _) -> let (keylen = _key.length) if (res > keylen) res else keylen)
-const maxWidthGlobal = value.toMap().fold(List(), (_res, _key, _value) -> _res + _value.toMap().keys).maxBy((x) -> x.length).length
+const maxWidthGlobal = (value) -> value.toMap().fold(List(), (_res, _key, _value) -> _res + _value.toMap().keys).maxBy((x) -> x.length).length
 
 open class Renderer extends ValueRenderer {
   justify: Boolean = false
