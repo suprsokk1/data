@@ -1,0 +1,52 @@
+const maxWidth = (value) -> value.fold(-1, (res, _key, _) -> let (keylen = _key.length) if (res > keylen) res else keylen)
+const maxWidthGlobal = value.toMap().fold(List(), (_res, _key, _value) -> _res + _value.toMap().keys).maxBy((x) -> x.length).length
+
+open class Renderer extends ValueRenderer {
+  justify: Boolean = false
+  delimiter: String = ", "
+  padding: Int = 0
+  debug = false
+
+  function renderSection(value: Map) =
+    let (max = value |> maxWidth)
+    value.fold(if (debug) "# keylen max = \(max)\n" else "", (res, _key, _value) -> res + renderSectionEntry(_key, _value, max))
+
+  function renderSectionEntry(key: String, value: Any, max_width: Int) =
+    let (padlen = max_width - key.length)
+    let (padding = " ".repeat(if (justify) padlen else 0))
+    if (debug) "\n\(key) = \(renderValue(value)) ; len=\(keylen)\n" else "\(key)\(padding) = \(renderValue(value))\n"
+
+  function renderValue(value: Any) =
+    let (type = value.getClass().simpleName)
+    if (value is Dynamic|Mapping)
+      renderValue(value.toMap()) + renderValue(value.toList())
+    else if (value is Section)
+      renderSection(value)
+    else if (value is List<String>)
+      value.join(outer.delimiter)
+    else if (value is Listing)
+      renderValue(value.toList())
+    else if (value is String)
+       value
+    else if (value is Boolean)
+       value.toString().capitalize()
+    else throw(#"""
+    '\#(type)' is not supported: '\#(value)'
+    """#)
+
+  function renderDocument(value: Any) =
+    let (type = value.getClass().simpleName)
+    if (value is Dynamic|Module)
+      let (first_key = value.toMap().keys.first)
+      let (max_width = value.toMap().fold(List(), (_res, _key, _value) -> _res + _value.toMap().keys).maxBy((x) -> x.length).length)
+      // let (value.toMap().put("_max_width", max_width).toDynamic())
+      // max_width.toString()
+      let (document = value.toMap().fold("", (_res, _key, _value) -> _res + (if (_key != first_key) "\n" else "") + #"[\#(_key)]\#n\#(renderValue(_value))"#))
+      if (justify) document else document
+
+    else throw(#"""
+    '\#(type)' at toplevel is not supported
+    """#)
+}
+
+typealias Section = Map|Mapping

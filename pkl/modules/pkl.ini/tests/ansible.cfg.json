@@ -1,0 +1,74 @@
+{
+  "defaults": {
+    "interpreter_python": [
+      "auto"
+    ],
+    "inventory": [
+      "inventory/10generic.sh"
+    ],
+    "gathering": [
+      "explicit"
+    ],
+    "result_format": [
+      "yaml"
+    ],
+    "strategy": [
+      "free"
+    ],
+    "callbacks_enabled": [
+      "timer, profile_tasks"
+    ],
+    "filter_plugins": [
+      "plugins/filter:~/.ansible/plugins/filter:/usr/share/ansible/plugins/filter"
+    ],
+    "lookup_plugins_enable": [
+      ""
+    ],
+    "lookup_plugins": [
+      "plugins/lookup:~/.ansible/plugins/lookup:/usr/share/ansible/plugins/lookup"
+    ],
+    "lookup_plugins_enabled": [
+      ""
+    ],
+    "vars_plugins": [
+      "plugins/vars:~/.ansible/plugins/vars:/usr/share/ansible/plugins/vars"
+    ],
+    "vars_plugins_enabled": [
+      "host_group_vars"
+    ],
+    "roles_path": [
+      "roles:~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
+    ],
+    "ask_pass": [
+      "False"
+    ],
+    "ask_vault_pass": [
+      "False"
+    ],
+    "become_ask_pass": [
+      "False"
+    ],
+    "host_key_checking": [
+      "False"
+    ],
+    "transport": [
+      "ssh"
+    ]
+  },
+  "inventory": {
+    "enable_plugins": [
+      "script"
+    ]
+  },
+  "connection": {
+    "pipelining": [
+      "True"
+    ]
+  },
+  "tags": {},
+  "passwordstore_lookup": {
+    "backend": [
+      "pass"
+    ]
+  }
+}

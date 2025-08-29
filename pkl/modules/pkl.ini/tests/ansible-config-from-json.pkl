@@ -1,0 +1,9 @@
+import "pkl:json"
+import "../ansible.pkl" as ini
+
+output {
+  value = new json.Parser {}.parse(read("file:ansible.cfg.json"))
+  renderer = new ini.Renderer {
+    justify = (read("prop:justify") ?? "false").toBoolean()
+  }
+}

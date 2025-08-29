@@ -1,0 +1,27 @@
+import "pkl:json"
+import "../ansible.pkl" as ini
+
+hidden json_text = #"""
+{
+  "defaults": {
+    "callbacks_enabled": [
+      "timer",
+      "profile_tasks"
+    ]
+  }
+}
+"""#
+
+defaults {
+  callbacks_enabled {
+    "timer"
+    "profile_tasks"
+  }
+}
+
+hidden ansible_cfg_json = new json.Parser {}.parse(read("file:ansible.cfg.json"))
+// json_parsed = new json.Parser {}.parse(json_text)
+
+output {
+  renderer = new ini.Renderer { }
+}
